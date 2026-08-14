@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hair Tracker">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<title>Self-Employed Hairdresser — Income & Tax Tracker</title>
+<style>
+  :root{
+    --ink:#14161c;
+    --panel:#1e222c;
+    --panel-2:#262b37;
+    --line:#333949;
+    --text:#eceef2;
+    --muted:#8b93a7;
+    --amber:#f2a63d;
+    --amber-dim:#f2a63d33;
+    --teal:#5ec8b0;
+    --teal-dim:#5ec8b033;
+    --red:#e0616b;
+    --red-dim:#e0616b33;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    min-height:100vh;
+    padding:32px 16px 80px;
+  }
+  .wrap{max-width:680px;margin:0 auto;}
+
+  header{margin-bottom:24px;}
+  .brand{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+  .brand-icon{width:20px;height:20px;flex:none;}
+  .brand-label{
+    font-family:'JetBrains Mono','Courier New',monospace;
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono','Courier New',monospace;
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin:0 0 8px;
+  }
+  h1{
+    font-family:'Space Grotesk','Inter',sans-serif;
+    font-size:27px;font-weight:700;letter-spacing:-.01em;margin:0 0 6px;
+  }
+  .sub{color:var(--muted);font-size:14px;line-height:1.5;margin:0;}
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px;
+    margin-bottom:14px;
+  }
+  .card h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+    margin:0 0 14px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+
+  .field-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;}
+  .field-row:last-child{margin-bottom:0;}
+  .field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:120px;}
+  .field label{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
+  .field .hint{font-size:11px;color:var(--muted);margin-top:2px;}
+
+  input[type="number"], input[type="date"], input[type="text"], select{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    color:var(--text);
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;
+    padding:8px 10px;
+    width:100%;
+  }
+  input:focus, select:focus{outline:none;border-color:var(--amber);}
+
+  .toggle-row{
+    display:flex;align-items:flex-start;gap:9px;
+    font-size:12.5px;color:var(--muted);line-height:1.4;
+    margin-top:6px;
+  }
+  .toggle-row input[type="checkbox"]{accent-color:var(--teal);width:15px;height:15px;margin-top:1px;flex:none;}
+
+  /* type switch */
+  .type-switch{display:flex;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:12px;}
+  .type-switch button{flex:1;background:transparent;border:none;color:var(--muted);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;padding:9px;cursor:pointer;}
+  .type-switch button+button{border-left:1px solid var(--line);}
+  .type-switch button.active[data-type="income"]{background:var(--teal-dim);color:var(--teal);}
+  .type-switch button.active[data-type="expense"]{background:var(--red-dim);color:var(--red);}
+
+  .add-btn{
+    width:100%;
+    background:var(--amber);
+    color:#1a1408;
+    border:none;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    padding:11px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:4px;
+  }
+  .add-btn:hover{opacity:.9;}
+
+  .setaside-tip{
+    font-size:12px;
+    color:var(--teal);
+    margin-top:8px;
+    min-height:16px;
+  }
+
+  /* services quick-add */
+  .service-grid{
+    margin-bottom:6px;
+  }
+  .service-btn{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 10px;
+    text-align:left;
+    cursor:pointer;
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+  }
+  .service-btn:hover{border-color:var(--teal);}
+  .service-btn:active{background:var(--teal-dim);border-color:var(--teal);}
+  .service-btn .s-name{display:block;font-size:12.5px;font-weight:600;line-height:1.3;margin-bottom:3px;}
+  .service-btn .s-price{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);}
+
+  .service-group-label{
+    font-size:11px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin:14px 0 8px;
+  }
+  .service-group-label:first-child{margin-top:0;}
+
+  .manage-toggle{
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    text-decoration:underline;
+    cursor:pointer;
+    padding:0;
+    margin:4px 0 14px;
+  }
+  .manage-toggle:hover{color:var(--teal);}
+
+  .manage-panel{display:none;margin-bottom:14px;}
+  .manage-panel.open{display:block;}
+  .manage-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+    flex-wrap:wrap;
+  }
+  .manage-row input[type="text"]{flex:2;}
+  .manage-row input[type="number"]{flex:1;}
+  .manage-row .manage-del{
+    background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;flex:none;padding:2px 6px;
+  }
+  .manage-row .manage-del:hover{color:var(--red);}
+  .manage-add-btn{
+    width:100%;
+    background:var(--panel-2);
+    border:1px dashed var(--line);
+    color:var(--muted);
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    padding:9px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:2px;
+  }
+  .manage-add-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+  .divider-label{
+    font-size:11px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:16px 0 10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .divider-label::before, .divider-label::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  /* entries list */
+  .entries{max-height:320px;overflow-y:auto;}
+  .entry{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:9px 0;
+    border-top:1px solid var(--line);
+    font-size:13px;
+    gap:10px;
+  }
+  .entry:first-child{border-top:none;}
+  .entry-main{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .entry-desc{color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .entry-meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+  .entry-right{display:flex;align-items:center;gap:10px;flex:none;}
+  .entry-amount{font-family:'JetBrains Mono',monospace;font-weight:600;white-space:nowrap;}
+  .entry-amount.income{color:var(--teal);}
+  .entry-amount.expense{color:var(--red);}
+  .entry-del{
+    background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;
+    line-height:1;padding:2px 6px;
+  }
+  .entry-del:hover{color:var(--red);}
+  .empty-state{color:var(--muted);font-size:13px;text-align:center;padding:20px 0;}
+
+  /* summary */
+  .summary-grid{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+  .summary-cell{flex:1;min-width:110px;background:var(--panel-2);border-radius:8px;padding:12px;}
+  .summary-cell .label{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+  .summary-cell .value{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;}
+  .summary-cell.income .value{color:var(--teal);}
+  .summary-cell.expense .value{color:var(--red);}
+  .summary-cell.profit .value{color:var(--amber);}
+
+  .setaside-box{
+    background:var(--panel);
+    border:1px solid var(--amber);
+    border-radius:var(--radius);
+    padding:18px;
+    margin-top:4px;
+  }
+  .setaside-headline{
+    display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px;
+  }
+  .setaside-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+  .setaside-pct{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;color:var(--amber);}
+  .setaside-sub{font-size:12px;color:var(--muted);margin-bottom:14px;}
+
+  .line-item{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:8px 0;border-top:1px solid var(--line);font-size:13px;
+  }
+  .line-item:first-of-type{border-top:none;}
+  .line-item .amount{font-family:'JetBrains Mono',monospace;font-weight:600;}
+  .line-item.total{border-top:1px solid var(--line);margin-top:2px;padding-top:12px;font-weight:700;font-size:14px;}
+
+  .export-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+  .export-btn{
+    flex:1;min-width:150px;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-family:'Inter',sans-serif;font-size:13px;font-weight:600;
+    padding:11px 14px;border-radius:8px;cursor:pointer;
+  }
+  .export-btn:hover{border-color:var(--teal);}
+  .export-hint{text-align:center;font-size:12px;color:var(--teal);margin:10px 0 0;min-height:16px;}
+
+  .note{font-size:11.5px;color:var(--muted);line-height:1.6;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+
+  footer{text-align:center;margin-top:22px;font-size:12px;color:var(--muted);line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <svg class="brand-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="17" stroke="#f2a63d" stroke-width="2.5"/>
+        <path d="M13 27l6-14M27 27l-6-14" stroke="#5ec8b0" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-label">Self-Employed · Isle of Man</span>
+    </div>
+    <p class="eyebrow">Income → Profit → Tax</p>
+    <h1>Hairdresser Tax Tracker</h1>
+    <p class="sub">Log what comes in and what goes out, and see how much to set aside for Income Tax, Class 2 and Class 4 National Insurance — as you go.</p>
+  </header>
+
+  <div class="card">
+    <h2>Settings</h2>
+    <div class="field-row">
+      <div class="field">
+        <label for="taxYearInput">Tax year</label>
+        <select id="taxYearInput"></select>
+      </div>
+      <div class="field">
+        <label for="allowanceInput">Personal allowance (£/yr)</label>
+        <input type="number" id="allowanceInput" min="0" step="1" value="17000">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="expectedProfitInput">Expected profit for the year (£, optional)</label>
+        <input type="number" id="expectedProfitInput" min="0" step="1" placeholder="Leave blank to estimate from entries so far">
+      </div>
+    </div>
+    <label class="toggle-row">
+      <input type="checkbox" id="onlyIncomeInput" checked>
+      This hairdressing income is my only income (uses my personal allowance here)
+    </label>
+    <label class="toggle-row">
+      <input type="checkbox" id="class2VoluntaryInput" checked>
+      Pay Class 2 NI even if profit is under the small-earnings threshold (protects your state pension record)
+    </label>
+  </div>
+
+  <div class="card">
+    <h2>Add entry</h2>
+
+    <div id="servicesSection">
+      <div class="service-grid" id="serviceGrid"></div>
+      <div class="setaside-tip" id="serviceHint"></div>
+      <button class="manage-toggle" id="manageToggleBtn">Edit services &amp; prices</button>
+      <div class="manage-panel" id="managePanel">
+        <div id="manageList"></div>
+        <button class="manage-add-btn" id="addServiceBtn">+ Add a service</button>
+      </div>
+      <div class="divider-label">Or enter manually</div>
+    </div>
+
+    <div class="type-switch">
+      <button type="button" data-type="income" class="active">Income</button>
+      <button type="button" data-type="expense">Expense</button>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="entryDate">Date</label>
+        <input type="date" id="entryDate">
+      </div>
+      <div class="field" id="categoryField">
+        <label for="entryCategory">Category</label>
+        <select id="entryCategory"></select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field" style="flex:2;">
+        <label for="entryDesc">Description</label>
+        <input type="text" id="entryDesc" placeholder="e.g. Cut &amp; colour — J. Smith">
+      </div>
+      <div class="field">
+        <label for="entryAmount">Amount (£)</label>
+        <input type="number" id="entryAmount" min="0" step="0.01" placeholder="0.00">
+      </div>
+    </div>
+    <button class="add-btn" id="addEntryBtn">Add entry</button>
+    <div class="setaside-tip" id="setasideTip"></div>
+  </div>
+
+  <div class="card">
+    <h2>Entries <span id="entryCount" style="font-weight:400;font-size:11px;"></span></h2>
+    <div class="entries" id="entriesList"></div>
+  </div>
+
+  <div class="card">
+    <h2>This tax year</h2>
+    <div class="summary-grid">
+      <div class="summary-cell income">
+        <div class="label">Income</div>
+        <div class="value" id="sumIncome">£0.00</div>
+      </div>
+      <div class="summary-cell expense">
+        <div class="label">Expenses</div>
+        <div class="value" id="sumExpense">£0.00</div>
+      </div>
+      <div class="summary-cell profit">
+        <div class="label">Net profit</div>
+        <div class="value" id="sumProfit">£0.00</div>
+      </div>
+    </div>
+
+    <div class="setaside-box">
+      <div class="setaside-headline">
+        <span class="setaside-label">Set aside from every payment</span>
+        <span class="setaside-pct" id="setasidePct">0%</span>
+      </div>
+      <div class="setaside-sub" id="setasideBasis"></div>
+
+      <div class="line-item">
+        <span>Estimated annual profit used</span>
+        <span class="amount" id="lineAnnualProfit">£0.00</span>
+      </div>
+      <div class="line-item">
+        <span>Income Tax</span>
+        <span class="amount" id="lineTax">£0.00</span>
+      </div>
+      <div class="line-item">
+        <span>Class 2 NI</span>
+        <span class="amount" id="lineClass2">£0.00</span>
+      </div>
+      <div class="line-item">
+        <span>Class 4 NI</span>
+        <span class="amount" id="lineClass4">£0.00</span>
+      </div>
+      <div class="line-item total">
+        <span>Total estimated tax + NI</span>
+        <span class="amount" id="lineTotal">£0.00</span>
+      </div>
+      <div class="line-item total" style="border-top:none;padding-top:6px;">
+        <span>You should have set aside by now</span>
+        <span class="amount" id="lineSetAsideSoFar">£0.00</span>
+      </div>
+    </div>
+
+    <div class="export-row">
+      <button class="export-btn" id="exportCsvBtn">Download entries as CSV</button>
+      <button class="export-btn" id="shareSummaryBtn">Share tax summary</button>
+    </div>
+    <p class="export-hint" id="exportHint"></p>
+
+    <div class="note">
+      Estimate only, based on Isle of Man Treasury rates for 2026/27 (Income Tax: 10% up to £6,500 above your allowance, 21% above that. Class 2 NI: flat £6.75/week if profit is above £9,152/year. Class 4 NI: 8% on profit between £9,152–£56,264, 1% above). It assumes fairly even earnings across the year and doesn't account for other allowances or reliefs — a proper self-assessment (or your accountant) will give the exact figure. Nothing here is submitted anywhere; it's for your own budgeting.
+    </div>
+  </div>
+
+  <footer>
+    Everything stays in your browser — nothing personal is sent anywhere.
+    <br><br>
+    <strong>On iPhone:</strong> open this file in Safari, tap the Share icon, then "Add to Home Screen" — it'll sit on your home screen like a normal app, icon and all.
+    <br>
+    <strong>On a computer:</strong> just keep the downloaded file anywhere handy (Desktop, Documents) and open it in any browser whenever you need it.
+  </footer>
+</div>
+
+<script>
+  const RATES = {
+    standardTaxRate: 0.10,
+    higherTaxRate: 0.21,
+    standardBandAnnual: 6500,
+    class2Weekly: 6.75,
+    class2ExceptionAnnual: 9152,
+    class4LowerLimit: 9152,
+    class4UpperLimit: 56264,
+    class4MainRate: 0.08,
+    class4UpperRate: 0.01,
+  };
+
+  const EXPENSE_CATEGORIES = [
+    "Stock & products","Chair / space rental","Equipment & tools","Insurance",
+    "Training & CPD","Travel","Marketing","Software / booking system","Other expense"
+  ];
+  const INCOME_CATEGORIES = ["Cut & colour","Styling","Treatments","Product sales","Tips","Other income"];
+
+  const DEFAULT_SERVICES = [
+    { group:"Cutting & Finishing", name:"Blow Dry — Short/Mid", price:24 },
+    { group:"Cutting & Finishing", name:"Blow Dry — Long", price:28 },
+    { group:"Cutting & Finishing", name:"Hair Up", price:40 },
+    { group:"Cutting & Finishing", name:"Hair Straighten", price:10 },
+    { group:"Cutting & Finishing", name:"Hair Curled", price:22 },
+    { group:"Cutting & Finishing", name:"Dry Cut — Short/Mid", price:24 },
+    { group:"Cutting & Finishing", name:"Dry Cut — Long", price:28 },
+    { group:"Cutting & Finishing", name:"Child's Dry Cut", price:11 },
+    { group:"Cutting & Finishing", name:"Gent's Cut", price:16 },
+    { group:"Cutting & Finishing", name:"Cut & Blow Dry — Short/Mid", price:37 },
+    { group:"Cutting & Finishing", name:"Cut & Blow Dry — Long", price:42 },
+    { group:"Cutting & Finishing", name:"Child's Cut & Blow Dry", price:25 },
+    { group:"Colouring & Treatments", name:"Conditioning Treatment", price:12 },
+    { group:"Colouring & Treatments", name:"Toner", price:20 },
+    { group:"Colouring & Treatments", name:"1/2 Head Foils", price:36 },
+    { group:"Colouring & Treatments", name:"T-Section", price:22 },
+    { group:"Colouring & Treatments", name:"Full Head Foils — Short/Mid", price:54 },
+    { group:"Colouring & Treatments", name:"Full Head Foils — Long", price:62 },
+    { group:"Colouring & Treatments", name:"Full Head Colour — Long", price:45 },
+    { group:"Colouring & Treatments", name:"Root Colour", price:32 },
+  ];
+
+  const STORAGE_KEY = "hairdresser-tax-tracker-v1";
+
+  function todayISO(){ return new Date().toISOString().slice(0,10); }
+
+  function taxYearFor(dateObj){
+    const y = dateObj.getFullYear();
+    const cutover = new Date(y,3,6); // 6 April
+    const startYear = dateObj >= cutover ? y : y-1;
+    return startYear;
+  }
+  function taxYearLabel(startYear){ return `${startYear}/${String(startYear+1).slice(2)}`; }
+  function taxYearBounds(startYear){
+    return { start: new Date(startYear,3,6), end: new Date(startYear+1,3,5) };
+  }
+
+  function loadState(){
+    try{
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if(saved && Array.isArray(saved.entries)){
+        if(!Array.isArray(saved.services) || saved.services.length === 0){
+          saved.services = JSON.parse(JSON.stringify(DEFAULT_SERVICES));
+        }
+        return saved;
+      }
+    }catch(e){}
+    return {
+      entries: [],
+      services: JSON.parse(JSON.stringify(DEFAULT_SERVICES)),
+      allowance: 17000,
+      onlyIncome: true,
+      class2Voluntary: true,
+      expectedProfit: {},
+      selectedTaxYear: null,
+    };
+  }
+  let state = loadState();
+
+  const taxYearInput = document.getElementById("taxYearInput");
+  const allowanceInput = document.getElementById("allowanceInput");
+  const expectedProfitInput = document.getElementById("expectedProfitInput");
+  const onlyIncomeInput = document.getElementById("onlyIncomeInput");
+  const class2VoluntaryInput = document.getElementById("class2VoluntaryInput");
+  const entryDate = document.getElementById("entryDate");
+  const entryCategory = document.getElementById("entryCategory");
+  const entryDesc = document.getElementById("entryDesc");
+  const entryAmount = document.getElementById("entryAmount");
+  const entriesList = document.getElementById("entriesList");
+  const serviceGrid = document.getElementById("serviceGrid");
+  const manageList = document.getElementById("manageList");
+  const managePanel = document.getElementById("managePanel");
+  const manageToggleBtn = document.getElementById("manageToggleBtn");
+  let currentType = "income";
+
+  function populateTaxYears(){
+    const now = new Date();
+    const currentStart = taxYearFor(now);
+    taxYearInput.innerHTML = "";
+    for(let y = currentStart+1; y >= currentStart-2; y--){
+      const opt = document.createElement("option");
+      opt.value = y;
+      opt.textContent = taxYearLabel(y);
+      taxYearInput.appendChild(opt);
+    }
+    taxYearInput.value = state.selectedTaxYear ?? currentStart;
+  }
+
+  function populateCategories(){
+    const list = currentType === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
+    entryCategory.innerHTML = list.map(c=>`<option value="${c}">${c}</option>`).join("");
+  }
+
+  function init(){
+    populateTaxYears();
+    populateCategories();
+    renderServices();
+    renderManagePanel();
+    entryDate.value = todayISO();
+    allowanceInput.value = state.allowance;
+    onlyIncomeInput.checked = state.onlyIncome;
+    class2VoluntaryInput.checked = state.class2Voluntary;
+    const y = taxYearInput.value;
+    expectedProfitInput.value = state.expectedProfit[y] || "";
+    render();
+  }
+
+  function save(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function fmt(n){
+    return "£" + (n||0).toLocaleString("en-GB",{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+
+  function renderServices(){
+    serviceGrid.innerHTML = "";
+    const groups = [];
+    state.services.forEach((svc, idx)=>{
+      const g = svc.group || "Services";
+      let bucket = groups.find(b=>b.name===g);
+      if(!bucket){ bucket = { name:g, items:[] }; groups.push(bucket); }
+      bucket.items.push({ ...svc, idx });
+    });
+    groups.forEach(bucket=>{
+      const label = document.createElement("div");
+      label.className = "service-group-label";
+      label.textContent = bucket.name;
+      serviceGrid.appendChild(label);
+
+      const row = document.createElement("div");
+      row.className = "service-grid-row";
+      row.style.display = "grid";
+      row.style.gridTemplateColumns = "repeat(auto-fill, minmax(130px, 1fr))";
+      row.style.gap = "8px";
+      row.style.marginBottom = "4px";
+
+      bucket.items.forEach(svc=>{
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "service-btn";
+        btn.dataset.idx = svc.idx;
+        btn.innerHTML = `<span class="s-name">${svc.name}</span><span class="s-price">from ${fmt(svc.price)}</span>`;
+        row.appendChild(btn);
+      });
+      serviceGrid.appendChild(row);
+    });
+  }
+
+  function renderManagePanel(){
+    manageList.innerHTML = "";
+    state.services.forEach((svc, idx)=>{
+      const row = document.createElement("div");
+      row.className = "manage-row";
+      row.innerHTML = `
+        <input type="text" value="${svc.name}" data-idx="${idx}" data-field="name" style="flex:2;">
+        <input type="text" value="${svc.group||''}" data-idx="${idx}" data-field="group" placeholder="Group" style="flex:1.3;">
+        <input type="number" step="0.01" min="0" value="${svc.price}" data-idx="${idx}" data-field="price" style="flex:1;">
+        <button class="manage-del" data-idx="${idx}" title="Remove">&times;</button>`;
+      manageList.appendChild(row);
+    });
+  }
+
+  serviceGrid.addEventListener("click", e=>{
+    const btn = e.target.closest(".service-btn");
+    if(!btn) return;
+    const svc = state.services[Number(btn.dataset.idx)];
+    if(!svc) return;
+
+    // switch to income mode
+    currentType = "income";
+    document.querySelectorAll(".type-switch button").forEach(b=>{
+      b.classList.toggle("active", b.dataset.type === "income");
+    });
+    populateCategories();
+
+    entryDesc.value = svc.name;
+    entryAmount.value = "";
+    entryAmount.focus();
+
+    const hintEl = document.getElementById("serviceHint");
+    hintEl.textContent = `${svc.name} selected — typical price from ${fmt(svc.price)}. Enter the actual price, then tap "Add entry".`;
+  });
+
+  manageToggleBtn.addEventListener("click", ()=>{
+    managePanel.classList.toggle("open");
+    manageToggleBtn.textContent = managePanel.classList.contains("open") ? "Done editing" : "Edit services & prices";
+  });
+
+  manageList.addEventListener("input", e=>{
+    const idx = Number(e.target.dataset.idx);
+    const field = e.target.dataset.field;
+    if(Number.isNaN(idx) || !field) return;
+    if(field === "price"){
+      state.services[idx].price = Number(e.target.value)||0;
+    }else if(field === "group"){
+      state.services[idx].group = e.target.value;
+    }else{
+      state.services[idx].name = e.target.value;
+    }
+    save();
+    renderServices();
+  });
+
+  manageList.addEventListener("click", e=>{
+    const btn = e.target.closest(".manage-del");
+    if(!btn) return;
+    state.services.splice(Number(btn.dataset.idx),1);
+    save();
+    renderManagePanel();
+    renderServices();
+  });
+
+  document.getElementById("addServiceBtn").addEventListener("click", ()=>{
+    state.services.push({ name:"New service", group:"Services", price:0 });
+    save();
+    renderManagePanel();
+    renderServices();
+  });
+
+  function entriesForSelectedYear(){
+    const startYear = Number(taxYearInput.value);
+    const { start, end } = taxYearBounds(startYear);
+    return state.entries.filter(e=>{
+      const d = new Date(e.date+"T00:00:00");
+      return d >= start && d <= end;
+    }).sort((a,b)=> new Date(b.date) - new Date(a.date));
+  }
+
+  function computeTax(annualProfit){
+    const allowance = Math.max(Number(allowanceInput.value)||0, 0);
+    let tax = 0;
+    if(onlyIncomeInput.checked){
+      const aboveAllowance = Math.max(annualProfit - allowance, 0);
+      const stdBand = Math.min(aboveAllowance, RATES.standardBandAnnual);
+      const higherBand = Math.max(aboveAllowance - RATES.standardBandAnnual, 0);
+      tax = stdBand*RATES.standardTaxRate + higherBand*RATES.higherTaxRate;
+    }else{
+      tax = annualProfit * RATES.higherTaxRate;
+    }
+
+    let class2 = 0;
+    if(annualProfit >= RATES.class2ExceptionAnnual || class2VoluntaryInput.checked){
+      class2 = RATES.class2Weekly * 52;
+    }
+
+    const c4Base = Math.max(annualProfit - RATES.class4LowerLimit, 0);
+    const c4Main = Math.min(c4Base, RATES.class4UpperLimit - RATES.class4LowerLimit);
+    const c4Upper = Math.max(c4Base - (RATES.class4UpperLimit - RATES.class4LowerLimit), 0);
+    const class4 = c4Main*RATES.class4MainRate + c4Upper*RATES.class4UpperRate;
+
+    return { tax, class2, class4, total: tax+class2+class4 };
+  }
+
+  function render(){
+    // persist settings
+    state.allowance = Number(allowanceInput.value)||0;
+    state.onlyIncome = onlyIncomeInput.checked;
+    state.class2Voluntary = class2VoluntaryInput.checked;
+    state.selectedTaxYear = Number(taxYearInput.value);
+    state.expectedProfit[taxYearInput.value] = expectedProfitInput.value;
+    save();
+
+    const yearEntries = entriesForSelectedYear();
+    entriesList.innerHTML = "";
+    document.getElementById("entryCount").textContent = yearEntries.length ? `(${yearEntries.length})` : "";
+    if(yearEntries.length === 0){
+      entriesList.innerHTML = `<div class="empty-state">No entries yet for ${taxYearLabel(Number(taxYearInput.value))}.</div>`;
+    }else{
+      yearEntries.forEach(e=>{
+        const row = document.createElement("div");
+        row.className = "entry";
+        row.innerHTML = `
+          <div class="entry-main">
+            <span class="entry-desc">${e.description || e.category}</span>
+            <span class="entry-meta">${e.date} · ${e.category}</span>
+          </div>
+          <div class="entry-right">
+            <span class="entry-amount ${e.type}">${e.type==="expense"?"-":"+"}${fmt(e.amount)}</span>
+            <button class="entry-del" data-id="${e.id}" title="Delete">&times;</button>
+          </div>`;
+        entriesList.appendChild(row);
+      });
+    }
+
+    const income = yearEntries.filter(e=>e.type==="income").reduce((s,e)=>s+e.amount,0);
+    const expense = yearEntries.filter(e=>e.type==="expense").reduce((s,e)=>s+e.amount,0);
+    const profit = income - expense;
+
+    document.getElementById("sumIncome").textContent = fmt(income);
+    document.getElementById("sumExpense").textContent = fmt(expense);
+    document.getElementById("sumProfit").textContent = fmt(profit);
+
+    // annualised or manual profit projection
+    const startYear = Number(taxYearInput.value);
+    const { start, end } = taxYearBounds(startYear);
+    const now = new Date();
+    const clampedNow = now < start ? start : (now > end ? end : now);
+    const daysElapsed = Math.max((clampedNow-start)/86400000, 1);
+    const totalDays = (end-start)/86400000;
+    const manualExpected = Number(expectedProfitInput.value)||0;
+    let annualProfit, basisText;
+    if(manualExpected > 0){
+      annualProfit = manualExpected;
+      basisText = "Using your expected profit figure above.";
+    }else{
+      annualProfit = profit > 0 ? (profit/daysElapsed*totalDays) : 0;
+      basisText = `Estimated by projecting your ${fmt(profit)} profit so far across the full tax year.`;
+    }
+
+    const t = computeTax(annualProfit);
+    const setAsidePct = annualProfit > 0 ? (t.total/annualProfit*100) : 0;
+
+    document.getElementById("setasidePct").textContent = setAsidePct.toFixed(1)+"%";
+    document.getElementById("setasideBasis").textContent = basisText;
+    document.getElementById("lineAnnualProfit").textContent = fmt(annualProfit);
+    document.getElementById("lineTax").textContent = fmt(t.tax);
+    document.getElementById("lineClass2").textContent = fmt(t.class2);
+    document.getElementById("lineClass4").textContent = fmt(t.class4);
+    document.getElementById("lineTotal").textContent = fmt(t.total);
+    document.getElementById("lineSetAsideSoFar").textContent = fmt(profit>0 ? profit*(setAsidePct/100) : 0);
+
+    window._currentSetAsidePct = setAsidePct;
+  }
+
+  document.querySelectorAll(".type-switch button").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      document.querySelectorAll(".type-switch button").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      currentType = btn.dataset.type;
+      populateCategories();
+    });
+  });
+
+  entryAmount.addEventListener("input", ()=>{
+    const amt = Number(entryAmount.value)||0;
+    const tip = document.getElementById("setasideTip");
+    if(currentType === "income" && amt > 0 && window._currentSetAsidePct){
+      const setAside = amt * (window._currentSetAsidePct/100);
+      tip.textContent = `Set aside about ${fmt(setAside)} of this (${window._currentSetAsidePct.toFixed(1)}%) for tax & NI.`;
+    }else{
+      tip.textContent = "";
+    }
+  });
+
+  document.getElementById("addEntryBtn").addEventListener("click", ()=>{
+    const amount = Number(entryAmount.value)||0;
+    if(amount <= 0){ entryAmount.focus(); return; }
+    state.entries.push({
+      id: Date.now()+"-"+Math.random().toString(36).slice(2,7),
+      type: currentType,
+      date: entryDate.value || todayISO(),
+      category: entryCategory.value,
+      description: entryDesc.value.trim(),
+      amount: amount,
+    });
+    entryDesc.value = "";
+    entryAmount.value = "";
+    document.getElementById("setasideTip").textContent = "";
+    document.getElementById("serviceHint").textContent = "";
+    save();
+    render();
+  });
+
+  entriesList.addEventListener("click", e=>{
+    const btn = e.target.closest(".entry-del");
+    if(!btn) return;
+    state.entries = state.entries.filter(en=>en.id !== btn.dataset.id);
+    save();
+    render();
+  });
+
+  [taxYearInput, allowanceInput, expectedProfitInput, onlyIncomeInput, class2VoluntaryInput]
+    .forEach(el=>el.addEventListener("input", ()=>{
+      if(el===taxYearInput){
+        expectedProfitInput.value = state.expectedProfit[taxYearInput.value] || "";
+      }
+      render();
+    }));
+
+  function showHint(msg){
+    const el = document.getElementById("exportHint");
+    el.textContent = msg;
+    setTimeout(()=>{ if(el.textContent===msg) el.textContent=""; }, 3500);
+  }
+
+  document.getElementById("exportCsvBtn").addEventListener("click", ()=>{
+    const yearEntries = entriesForSelectedYear().slice().sort((a,b)=> new Date(a.date)-new Date(b.date));
+    const rows = [["Date","Type","Category","Description","Amount"]];
+    yearEntries.forEach(e=> rows.push([e.date, e.type, e.category, e.description, e.amount.toFixed(2)]));
+    const csv = rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+    const blob = new Blob([csv], {type:"text/csv"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `hairdresser-entries-${taxYearLabel(Number(taxYearInput.value)).replace("/","-")}.csv`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showHint('Downloaded — on iPhone, choose "Save to Files" when prompted.');
+  });
+
+  document.getElementById("shareSummaryBtn").addEventListener("click", async ()=>{
+    const income = Number(document.getElementById("sumIncome").textContent.replace(/[£,]/g,""));
+    const expense = Number(document.getElementById("sumExpense").textContent.replace(/[£,]/g,""));
+    const profit = Number(document.getElementById("sumProfit").textContent.replace(/[£,]/g,""));
+    const text = [
+      `Hairdresser tax summary — ${taxYearLabel(Number(taxYearInput.value))}`,
+      "",
+      `Income: ${fmt(income)}`,
+      `Expenses: ${fmt(expense)}`,
+      `Net profit: ${fmt(profit)}`,
+      "",
+      `Estimated annual profit: ${document.getElementById("lineAnnualProfit").textContent}`,
+      `Income Tax: ${document.getElementById("lineTax").textContent}`,
+      `Class 2 NI: ${document.getElementById("lineClass2").textContent}`,
+      `Class 4 NI: ${document.getElementById("lineClass4").textContent}`,
+      `Total estimated tax + NI: ${document.getElementById("lineTotal").textContent}`,
+      `Set aside per payment: ${document.getElementById("setasidePct").textContent}`,
+    ].join("\n");
+
+    if(navigator.share){
+      try{ await navigator.share({ title:"Hairdresser tax summary", text }); return; }
+      catch(err){ if(err && err.name==="AbortError") return; }
+    }
+    try{
+      await navigator.clipboard.writeText(text);
+      showHint("Copied — paste into Notes or anywhere you like.");
+    }catch(err){
+      showHint("Couldn't share or copy — try the CSV download instead.");
+    }
+  });
+
+  init();
+</script>
+</body>
+</html>
