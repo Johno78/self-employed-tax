@@ -423,10 +423,13 @@
       <button class="export-btn" id="exportCsvBtn">Download entries as CSV</button>
       <button class="export-btn" id="shareSummaryBtn">Share tax summary</button>
     </div>
+    <div class="export-row">
+      <button class="export-btn" id="yearEndBtn" style="background:var(--amber);color:#1a1408;border-color:var(--amber);">Download year-end summary (for tax form)</button>
+    </div>
     <p class="export-hint" id="exportHint"></p>
 
     <div class="note">
-      Estimate only, based on Isle of Man Treasury rates for 2026/27 (Income Tax: 10% up to £6,500 above your allowance, 21% above that. Class 2 NI: flat £6.75/week if profit is above £9,152/year. Class 4 NI: 8% on profit between £9,152–£56,264, 1% above). It assumes fairly even earnings across the year and doesn't account for other allowances or reliefs — a proper self-assessment (or your accountant) will give the exact figure. Nothing here is submitted anywhere; it's for your own budgeting.
+      Estimate only, based on Isle of Man Treasury rates for 2026/27 (Income Tax: 10% up to £6,500 above your allowance, 21% above that. Class 2 NI: flat £6.75/week if profit is above £9,152/year. Class 4 NI: 8% on profit between £9,152–£56,264, 1% above). It assumes fairly even earnings across the year and doesn't account for other allowances or reliefs — a proper self-assessment (or your accountant) will give the exact figure. The year-end summary totals your income and expenses by category, ready to copy into your online tax return — always double-check the figures before submitting. Nothing here is submitted anywhere; everything stays in your browser.
     </div>
   </div>
 
@@ -889,6 +892,72 @@
     }catch(err){
       showHint("Couldn't share or copy — try the CSV download instead.");
     }
+  });
+
+  function categoryTotals(entries, type){
+    const totals = {};
+    entries.filter(e=>e.type===type).forEach(e=>{
+      totals[e.category] = (totals[e.category]||0) + e.amount;
+    });
+    return Object.entries(totals).sort((a,b)=> b[1]-a[1]);
+  }
+
+  function buildYearEndSummary(){
+    const yearEntries = entriesForSelectedYear();
+    const label = taxYearLabel(Number(taxYearInput.value));
+    const income = yearEntries.filter(e=>e.type==="income").reduce((s,e)=>s+e.amount,0);
+    const expense = yearEntries.filter(e=>e.type==="expense").reduce((s,e)=>s+e.amount,0);
+    const profit = income - expense;
+
+    const incomeCats = categoryTotals(yearEntries, "income");
+    const expenseCats = categoryTotals(yearEntries, "expense");
+
+    const lines = [
+      `SELF-EMPLOYMENT TAX SUMMARY — ${label}`,
+      `Tax year: 6 April ${Number(taxYearInput.value)} to 5 April ${Number(taxYearInput.value)+1}`,
+      "",
+      "===================================",
+      "INCOME (turnover)",
+      "===================================",
+    ];
+    incomeCats.forEach(([cat, amt])=> lines.push(`${cat.padEnd(28)} ${fmt(amt)}`));
+    lines.push("-----------------------------------");
+    lines.push(`TOTAL INCOME${" ".repeat(16)}${fmt(income)}`);
+    lines.push("");
+    lines.push("===================================");
+    lines.push("EXPENSES (allowable business costs)");
+    lines.push("===================================");
+    expenseCats.forEach(([cat, amt])=> lines.push(`${cat.padEnd(28)} ${fmt(amt)}`));
+    lines.push("-----------------------------------");
+    lines.push(`TOTAL EXPENSES${" ".repeat(14)}${fmt(expense)}`);
+    lines.push("");
+    lines.push("===================================");
+    lines.push(`NET PROFIT${" ".repeat(18)}${fmt(profit)}`);
+    lines.push("===================================");
+    lines.push("");
+    lines.push("Reference — estimated liabilities (check your figures on submission):");
+    lines.push(`  Estimated Income Tax:        ${document.getElementById("lineTax").textContent}`);
+    lines.push(`  Estimated Class 2 NI:        ${document.getElementById("lineClass2").textContent}`);
+    lines.push(`  Estimated Class 4 NI:        ${document.getElementById("lineClass4").textContent}`);
+    lines.push(`  Total estimated tax + NI:    ${document.getElementById("lineTotal").textContent}`);
+    lines.push("");
+    lines.push(`Entries logged this year: ${yearEntries.length}`);
+    lines.push("Figures are your own records — always double-check totals before submitting your online tax return.");
+
+    return lines.join("\n");
+  }
+
+  document.getElementById("yearEndBtn").addEventListener("click", ()=>{
+    const text = buildYearEndSummary();
+    const label = taxYearLabel(Number(taxYearInput.value)).replace("/","-");
+    const blob = new Blob([text], {type:"text/plain"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `tax-year-summary-${label}.txt`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showHint('Downloaded — on iPhone, choose "Save to Files" (or share it straight to Notes).');
   });
 
   init();
