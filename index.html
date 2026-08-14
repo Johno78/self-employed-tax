@@ -902,12 +902,24 @@
     return Object.entries(totals).sort((a,b)=> b[1]-a[1]);
   }
 
+  // Categories treated as direct "Cost of Sales" (product/material cost of delivering the
+  // service) vs everything else, which counts as overheads deducted after Gross Profit.
+  const COST_OF_SALES_CATEGORIES = ["Stock & products"];
+
   function buildYearEndSummary(){
     const yearEntries = entriesForSelectedYear();
     const label = taxYearLabel(Number(taxYearInput.value));
-    const income = yearEntries.filter(e=>e.type==="income").reduce((s,e)=>s+e.amount,0);
-    const expense = yearEntries.filter(e=>e.type==="expense").reduce((s,e)=>s+e.amount,0);
-    const profit = income - expense;
+
+    const turnover = yearEntries.filter(e=>e.type==="income").reduce((s,e)=>s+e.amount,0);
+    const costOfSales = yearEntries
+      .filter(e=>e.type==="expense" && COST_OF_SALES_CATEGORIES.includes(e.category))
+      .reduce((s,e)=>s+e.amount,0);
+    const overheads = yearEntries
+      .filter(e=>e.type==="expense" && !COST_OF_SALES_CATEGORIES.includes(e.category))
+      .reduce((s,e)=>s+e.amount,0);
+    const totalExpenses = costOfSales + overheads;
+    const grossProfit = turnover - costOfSales;
+    const netProfit = grossProfit - overheads; // == turnover - totalExpenses
 
     const incomeCats = categoryTotals(yearEntries, "income");
     const expenseCats = categoryTotals(yearEntries, "expense");
@@ -917,32 +929,50 @@
       `Tax year: 6 April ${Number(taxYearInput.value)} to 5 April ${Number(taxYearInput.value)+1}`,
       "",
       "===================================",
-      "INCOME (turnover)",
+      "FIGURES FOR THE ONLINE TAX FORM",
+      "===================================",
+      `Turnover (£)              ${fmt(turnover)}`,
+      `Gross Profit (£)          ${fmt(grossProfit)}`,
+      `Net profit (£)            ${fmt(netProfit)}`,
+      `Tax Paid (sub-contractors only) (£)   0.00   — leave as 0 unless you had tax deducted at source`,
+      `Taxable profit (£)        ${fmt(netProfit)}   — same as Net profit, unless you're claiming capital allowances or loss relief (leave blank on the form if so, and submit your tax computation separately)`,
+      "",
+      "-----------------------------------",
+      "How this was worked out:",
+      "-----------------------------------",
+      `Turnover (all income)              ${fmt(turnover)}`,
+      `less Cost of Sales (stock/products) ${fmt(costOfSales)}`,
+      `= Gross Profit                      ${fmt(grossProfit)}`,
+      `less other business expenses        ${fmt(overheads)}`,
+      `= Net profit                        ${fmt(netProfit)}`,
+      "",
+      "===================================",
+      "INCOME BY CATEGORY",
       "===================================",
     ];
     incomeCats.forEach(([cat, amt])=> lines.push(`${cat.padEnd(28)} ${fmt(amt)}`));
     lines.push("-----------------------------------");
-    lines.push(`TOTAL INCOME${" ".repeat(16)}${fmt(income)}`);
+    lines.push(`TOTAL INCOME / TURNOVER${" ".repeat(5)}${fmt(turnover)}`);
     lines.push("");
     lines.push("===================================");
-    lines.push("EXPENSES (allowable business costs)");
+    lines.push("EXPENSES BY CATEGORY");
     lines.push("===================================");
-    expenseCats.forEach(([cat, amt])=> lines.push(`${cat.padEnd(28)} ${fmt(amt)}`));
+    expenseCats.forEach(([cat, amt])=>{
+      const tag = COST_OF_SALES_CATEGORIES.includes(cat) ? " (cost of sales)" : "";
+      lines.push(`${(cat+tag).padEnd(40)} ${fmt(amt)}`);
+    });
     lines.push("-----------------------------------");
-    lines.push(`TOTAL EXPENSES${" ".repeat(14)}${fmt(expense)}`);
+    lines.push(`TOTAL EXPENSES${" ".repeat(14)}${fmt(totalExpenses)}`);
     lines.push("");
     lines.push("===================================");
-    lines.push(`NET PROFIT${" ".repeat(18)}${fmt(profit)}`);
-    lines.push("===================================");
-    lines.push("");
-    lines.push("Reference — estimated liabilities (check your figures on submission):");
+    lines.push("Reference — estimated tax/NI liability (not form fields, just for your own budgeting):");
     lines.push(`  Estimated Income Tax:        ${document.getElementById("lineTax").textContent}`);
     lines.push(`  Estimated Class 2 NI:        ${document.getElementById("lineClass2").textContent}`);
     lines.push(`  Estimated Class 4 NI:        ${document.getElementById("lineClass4").textContent}`);
     lines.push(`  Total estimated tax + NI:    ${document.getElementById("lineTotal").textContent}`);
     lines.push("");
     lines.push(`Entries logged this year: ${yearEntries.length}`);
-    lines.push("Figures are your own records — always double-check totals before submitting your online tax return.");
+    lines.push("These are your own records — always double-check totals before submitting your online tax return.");
 
     return lines.join("\n");
   }
