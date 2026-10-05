@@ -312,6 +312,16 @@
         <input type="number" id="expectedProfitInput" min="0" step="1" placeholder="Leave blank to estimate from entries so far">
       </div>
     </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="otherIncomeInput">Other taxable income this year (£, optional)</label>
+        <input type="number" id="otherIncomeInput" min="0" step="1" placeholder="e.g. Child Benefit, a job, a pension">
+      </div>
+      <div class="field">
+        <label for="loanInterestInput">Loan interest paid this year (£, optional)</label>
+        <input type="number" id="loanInterestInput" min="0" step="1" placeholder="Gets tax relief at 10%">
+      </div>
+    </div>
     <label class="toggle-row">
       <input type="checkbox" id="onlyIncomeInput" checked>
       This hairdressing income is my only income (uses my personal allowance here)
@@ -398,15 +408,15 @@
         <span class="amount" id="lineAnnualProfit">£0.00</span>
       </div>
       <div class="line-item">
-        <span>Income Tax</span>
+        <span>Income Tax<br><small id="descTax" style="color:var(--muted);font-size:11px;"></small></span>
         <span class="amount" id="lineTax">£0.00</span>
       </div>
       <div class="line-item">
-        <span>Class 2 NI</span>
+        <span>Class 2 NI<br><small id="descClass2" style="color:var(--muted);font-size:11px;"></small></span>
         <span class="amount" id="lineClass2">£0.00</span>
       </div>
       <div class="line-item">
-        <span>Class 4 NI</span>
+        <span>Class 4 NI<br><small id="descClass4" style="color:var(--muted);font-size:11px;"></small></span>
         <span class="amount" id="lineClass4">£0.00</span>
       </div>
       <div class="line-item total">
@@ -429,7 +439,7 @@
     <p class="export-hint" id="exportHint"></p>
 
     <div class="note">
-      Estimate only, based on Isle of Man Treasury rates for 2026/27 (Income Tax: 10% up to £6,500 above your allowance, 21% above that. Class 2 NI: flat £6.75/week if profit is above £9,152/year. Class 4 NI: 8% on profit between £9,152–£56,264, 1% above). It assumes fairly even earnings across the year and doesn't account for other allowances or reliefs — a proper self-assessment (or your accountant) will give the exact figure. The year-end summary totals your income and expenses by category, ready to copy into your online tax return — always double-check the figures before submitting. Nothing here is submitted anywhere; everything stays in your browser.
+      Estimate only, based on Isle of Man Treasury rates for the tax year selected above (2025/26 and 2026/27 are built in; the exact rates used are shown under each line). It assumes fairly even earnings across the year and doesn't account for other allowances or reliefs — a proper self-assessment (or your accountant) will give the exact figure. The year-end summary totals your income and expenses by category, ready to copy into your online tax return — always double-check the figures before submitting. Nothing here is submitted anywhere; everything stays in your browser.
     </div>
   </div>
 
@@ -443,17 +453,29 @@
 </div>
 
 <script>
-  const RATES = {
+  // Isle of Man Treasury rates, keyed by the year the tax year STARTS (6 April).
+  // Source: gov.im "Rates and allowances" and "National Insurance rates and thresholds".
+  const COMMON_RATES = {
     standardTaxRate: 0.10,
     higherTaxRate: 0.21,
     standardBandAnnual: 6500,
-    class2Weekly: 6.75,
-    class2ExceptionAnnual: 9152,
-    class4LowerLimit: 9152,
-    class4UpperLimit: 56264,
     class4MainRate: 0.08,
     class4UpperRate: 0.01,
   };
+  const RATES_BY_YEAR = {
+    2025: { ...COMMON_RATES, allowance: 14750, class2Weekly: 6.45, class2ExceptionAnnual: 8736, class4LowerLimit: 8736, class4UpperLimit: 53664 },
+    2026: { ...COMMON_RATES, allowance: 17000, class2Weekly: 6.75, class2ExceptionAnnual: 9152, class4LowerLimit: 9152, class4UpperLimit: 56264 },
+  };
+  const KNOWN_ALLOWANCES = [14500, 14750, 17000]; // standard allowances — safe to auto-switch when the year changes
+  function ratesFor(startYear){
+    if(RATES_BY_YEAR[startYear]) return { rates: RATES_BY_YEAR[startYear], exact: true };
+    const years = Object.keys(RATES_BY_YEAR).map(Number);
+    const nearest = startYear < Math.min(...years) ? Math.min(...years) : Math.max(...years);
+    return { rates: RATES_BY_YEAR[nearest], exact: false, usedYear: nearest };
+  }
+  function currentRates(){
+    return ratesFor(Number(taxYearInput.value)).rates;
+  }
 
   const EXPENSE_CATEGORIES = [
     "Stock & products","Chair / space rental","Equipment & tools","Insurance",
@@ -525,6 +547,10 @@
   const allowanceInput = document.getElementById("allowanceInput");
   const expectedProfitInput = document.getElementById("expectedProfitInput");
   const onlyIncomeInput = document.getElementById("onlyIncomeInput");
+  const otherIncomeInput = document.getElementById("otherIncomeInput");
+  const loanInterestInput = document.getElementById("loanInterestInput");
+  if(!state.otherIncome) state.otherIncome = {};
+  if(!state.loanInterest) state.loanInterest = {};
   const class2VoluntaryInput = document.getElementById("class2VoluntaryInput");
   const entryDate = document.getElementById("entryDate");
   const entryCategory = document.getElementById("entryCategory");
@@ -562,10 +588,13 @@
     renderManagePanel();
     entryDate.value = todayISO();
     allowanceInput.value = state.allowance;
+    if(KNOWN_ALLOWANCES.includes(Number(state.allowance))) allowanceInput.value = ratesFor(Number(taxYearInput.value)).rates.allowance;
     onlyIncomeInput.checked = state.onlyIncome;
     class2VoluntaryInput.checked = state.class2Voluntary;
     const y = taxYearInput.value;
     expectedProfitInput.value = state.expectedProfit[y] || "";
+    otherIncomeInput.value = state.otherIncome[y] || "";
+    loanInterestInput.value = state.loanInterest[y] || "";
     render();
   }
 
@@ -692,13 +721,21 @@
   }
 
   function computeTax(annualProfit){
+    const RATES = currentRates();
     const allowance = Math.max(Number(allowanceInput.value)||0, 0);
     let tax = 0;
     if(onlyIncomeInput.checked){
-      const aboveAllowance = Math.max(annualProfit - allowance, 0);
+      // The Income Tax Division works in whole pounds. Other taxable income (e.g. Child Benefit)
+      // is added to the profit before the allowance comes off; loan interest then gets relief
+      // at the standard rate.
+      const otherIncome = Math.round(Number(otherIncomeInput.value)||0);
+      const loanInterest = Math.round(Number(loanInterestInput.value)||0);
+      const totalIncome = Math.round(annualProfit) + otherIncome;
+      const aboveAllowance = Math.max(totalIncome - allowance, 0);
       const stdBand = Math.min(aboveAllowance, RATES.standardBandAnnual);
       const higherBand = Math.max(aboveAllowance - RATES.standardBandAnnual, 0);
       tax = stdBand*RATES.standardTaxRate + higherBand*RATES.higherTaxRate;
+      tax = Math.max(tax - loanInterest*RATES.standardTaxRate, 0);
     }else{
       tax = annualProfit * RATES.higherTaxRate;
     }
@@ -723,6 +760,8 @@
     state.class2Voluntary = class2VoluntaryInput.checked;
     state.selectedTaxYear = Number(taxYearInput.value);
     state.expectedProfit[taxYearInput.value] = expectedProfitInput.value;
+    state.otherIncome[taxYearInput.value] = otherIncomeInput.value;
+    state.loanInterest[taxYearInput.value] = loanInterestInput.value;
     save();
 
     const yearEntries = entriesForSelectedYear();
@@ -782,6 +821,20 @@
     document.getElementById("lineClass2").textContent = fmt(t.class2);
     document.getElementById("lineClass4").textContent = fmt(t.class4);
     document.getElementById("lineTotal").textContent = fmt(t.total);
+
+    const R = currentRates();
+    const rInfo = ratesFor(startYear);
+    document.getElementById("descTax").textContent =
+      `${R.standardTaxRate*100}% on the first ${fmt(R.standardBandAnnual)} above your allowance, ${R.higherTaxRate*100}% after that`;
+    document.getElementById("descClass2").textContent =
+      `${fmt(R.class2Weekly)} a week × 52`;
+    document.getElementById("descClass4").textContent =
+      `${R.class4MainRate*100}% on profit ${fmt(R.class4LowerLimit)}–${fmt(R.class4UpperLimit)}, ${R.class4UpperRate*100}% above`;
+    if(!rInfo.exact){
+      document.getElementById("setasideBasis").textContent +=
+        ` Note: ${taxYearLabel(startYear)} rates aren't built in, so ${taxYearLabel(rInfo.usedYear)} rates are being used.`;
+    }
+
     document.getElementById("lineSetAsideSoFar").textContent = fmt(profit>0 ? profit*(setAsidePct/100) : 0);
 
     window._currentSetAsidePct = setAsidePct;
@@ -834,10 +887,15 @@
     render();
   });
 
-  [taxYearInput, allowanceInput, expectedProfitInput, onlyIncomeInput, class2VoluntaryInput]
+  [taxYearInput, allowanceInput, expectedProfitInput, onlyIncomeInput, class2VoluntaryInput, otherIncomeInput, loanInterestInput]
     .forEach(el=>el.addEventListener("input", ()=>{
       if(el===taxYearInput){
         expectedProfitInput.value = state.expectedProfit[taxYearInput.value] || "";
+        otherIncomeInput.value = state.otherIncome[taxYearInput.value] || "";
+        loanInterestInput.value = state.loanInterest[taxYearInput.value] || "";
+        // Switch to that year's standard allowance, unless a custom one has been typed in
+        const known = ratesFor(Number(taxYearInput.value));
+        if(KNOWN_ALLOWANCES.includes(Number(allowanceInput.value))) allowanceInput.value = known.rates.allowance;
       }
       render();
     }));
